@@ -1,0 +1,14 @@
+{
+  "name": "appdev-test-set",
+  "version": "1.0.0",
+  "description": "Application Development Set Test with Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raul Moctezuma",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^3.0.2"
+  }
+}
