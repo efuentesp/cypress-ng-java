@@ -20,12 +20,14 @@ Record tests
 
 Option 1:
 ```
-./node_modules/.bin/cypress run --record --key 46101a73-8a2d-4fb9-9275-b002b990f2d
+./node_modules/.bin/cypress run --record --key [key_value]
 ```
 
 Option 2:
 ```
-$(npm bin)/cypress run --record --key 46101a73-8a2d-4fb9-9275-b002b990f2d
+$(npm bin)/cypress run --record --key [key_value]
 ```
+
+El "key_value" se genera en el Dashboard de Cypress
 
 

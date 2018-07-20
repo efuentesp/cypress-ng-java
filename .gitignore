@@ -3,3 +3,4 @@
 npm-debug.log*
 //dist
 node_modules
+cypress/screenshots/test-set/7_add-existing-user.js/Add an existing user -- Go to Agregar User menu option fill all fields with an existing user name and got an error message because of the existing user (failed).png

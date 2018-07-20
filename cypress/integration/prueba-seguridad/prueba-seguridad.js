@@ -9,11 +9,13 @@ describe('Prueba de Seguridad', function() {
 	//**************************************************************
 	//*************** 1. Firmarse como administrador ***************
 	//**************************************************************
-	cy.visit('http://172.16.70.145:3000/login')
+	cy.visit(Cypress.env('api_server'))
 	cy.get('input[name="username"]').type('admin')
 	cy.get('input[name="password"]').type('admin')
 	cy.get('button').contains('Login').click()
 	cy.url().should('contain', '/admin')
+	cy.wait(3000)
+	cy.screenshot('paso_1', {capture:'viewport'})
 	
 	//**************************************************************
 	//************* 2. Crear un Authority (Rol) nuevo. *************
@@ -27,6 +29,8 @@ describe('Prueba de Seguridad', function() {
 	})
 	cy.get('button').contains('Agregar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Authority save successfully.')
+	cy.wait(3000)
+	cy.screenshot('paso_2', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	
 	//**************************************************************
@@ -46,6 +50,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Agregar').click()
 	cy.wait(1000)
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'User save successfully.')
+	cy.wait(3000)
+	cy.screenshot('paso_3', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	
 	//**************************************************************
@@ -66,7 +72,9 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Agregar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'User duplicated.')
 	cy.wait(3000)
+	cy.screenshot('paso_4', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	
 	
 	//**************************************************************
 	//******* 5. Dar permisos al nuevo Rol para afiliados(CRUD)*****
@@ -98,6 +106,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('table>tbody>').contains('tr', 'BENEFICIARIOUPDATE').within(() => {
 		cy.get('input[type="checkbox"]').eq(3).check()
 	})
+	cy.wait(3000)
+	cy.screenshot('paso_5', {capture:'fullPage'})
 	
 	//**************************************************************
 	//******************** 6. Salir del sistema ********************
@@ -107,6 +117,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_6', {capture:'viewport'})
 	
 	//**************************************************************
 	//* 7. Firmarse con el nuevo Usuario, verificar CRUD afiliado **
@@ -130,6 +142,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('li>a').should('not.contain', 'Administrar User')
 		cy.get('li>a').should('not.contain', 'Agregar User')
 	})
+	cy.wait(3000)
+	cy.screenshot('paso_7', {capture:'viewport'})
 	
 	//**************************************************************
 	//******************** 8. Crear un Afiliado ********************
@@ -158,6 +172,7 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Agregar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Afiliado save successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_8', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	
 	//**************************************************************
@@ -172,6 +187,7 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Modificar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Afiliado save successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_9', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	
 	//**************************************************************
@@ -186,6 +202,7 @@ describe('Prueba de Seguridad', function() {
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Afiliado item has been deleted successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_10', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	
 	//**************************************************************
@@ -196,6 +213,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_11', {capture:'viewport'})
 	
 	//**************************************************************
 	//*************** 12. Firmarse como administrador. *************
@@ -204,6 +223,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('input[name="password"]').type('admin')
 	cy.get('button').contains('Login').click()
 	cy.url().should('contain', '/admin')
+	cy.wait(3000)
+	cy.screenshot('paso_12', {capture:'viewport'})
 	
 	//**************************************************************
 	//******* 13. Intentar borrar el Authority (Rol) creado. *******
@@ -219,7 +240,9 @@ describe('Prueba de Seguridad', function() {
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'El Authority no se puede eliminar debido a que esta asociado con usuarios.')
 	cy.wait(3000)
+	cy.screenshot('paso_13', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	
 	
 	//**************************************************************
 	//******************* 14. Desactivar el Rol. *******************
@@ -235,7 +258,9 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Modificar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Authority save successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_14', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	
 	
 	//**************************************************************
 	//******************** 15. Salir del sistema *******************
@@ -245,6 +270,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_15', {capture:'viewport'})
 	
 	//**************************************************************
 	// 16. Firmarse con el nuevo Usuario, validar opciones de menú 
@@ -258,6 +285,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('div[id="sidebar-menu"]').within(() => {
 		cy.get('li').should('have.length', 1)
 	})
+	cy.wait(3000)
+	cy.screenshot('paso_16', {capture:'viewport'})
 	
 	//**************************************************************
 	//******************** 17. Salir del sistema *******************
@@ -267,6 +296,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_17', {capture:'viewport'})
 	
 	//**************************************************************
 	//************** 18. Firmarse como Administrador. **************
@@ -275,6 +306,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('input[name="password"]').type('admin')
 	cy.get('button').contains('Login').click()
 	cy.url().should('contain', '/admin')
+	cy.wait(3000)
+	cy.screenshot('paso_18', {capture:'viewport'})
 	
 	//**************************************************************
 	//********** 19. Activar nuevamente el Authority (Rol). ********
@@ -291,7 +324,9 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Modificar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Authority save successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_19', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	
 	
 	//**************************************************************
 	//************** 20. Desactivar ahora el Usuario. **************
@@ -307,7 +342,9 @@ describe('Prueba de Seguridad', function() {
 	cy.get('button').contains('Modificar').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'User save successfully.')
 	cy.wait(3000)
+	cy.screenshot('paso_20', {capture:'viewport'})
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	
 	
 	//**************************************************************
 	//******************** 21. Salir del sistema *******************
@@ -317,6 +354,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_21', {capture:'viewport'})
 	
 	//**************************************************************
 	// 22. Firmarse con el nuevo usuario, validar no se pueda entrar
@@ -325,6 +364,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('input[name="password"]').type('test_user')
 	cy.get('button').contains('Login').click()
 	cy.get('div[class="alert alert-danger"]').should('contain', 'Username or password is incorrect')
+	cy.wait(3000)
+	cy.screenshot('paso_22', {capture:'viewport'})
 	
 	//**************************************************************
 	//************** 23. Firmarse como administrador. **************
@@ -333,6 +374,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('input[name="password"]').clear().type('admin')
 	cy.get('button').contains('Login').click()
 	cy.url().should('contain', '/admin')
+	cy.wait(3000)
+	cy.screenshot('paso_23', {capture:'viewport'})
 	
 	//**************************************************************
 	//*************** 24. Eliminar el usuario nuevo. ***************
@@ -347,7 +390,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'User item has been deleted successfully.')
 	cy.wait(3000)
-	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	cy.screenshot('paso_24', {capture:'viewport'})
+	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()	
 	
 	//**************************************************************
 	// 25. Eliminar el Authority (rol) nuevo, validar que se pueda *
@@ -362,7 +406,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
 	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-content"]').should('contain', 'Authority item has been deleted successfully.')
 	cy.wait(3000)
-	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	cy.screenshot('paso_25', {capture:'viewport'})
+	cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()	
 	
 	//**************************************************************
 	//******************** 26. Salir del sistema *******************
@@ -372,6 +417,8 @@ describe('Prueba de Seguridad', function() {
 		cy.get('ul>li>button').contains('LogOut').should('be.visible').click()
 	})
 	cy.url().should('contain', '/login')
+	cy.wait(3000)
+	cy.screenshot('paso_26', {capture:'viewport'})
 	
 	//**************************************************************
 	// 27. Firmarse con el nuevo usuario, validar no se pueda entrar
@@ -380,6 +427,8 @@ describe('Prueba de Seguridad', function() {
 	cy.get('input[name="password"]').type('test_user')
 	cy.get('button').contains('Login').click()
 	cy.get('div[class="alert alert-danger"]').should('contain', 'Username or password is incorrect')
+	cy.wait(3000)
+	cy.screenshot('paso_27', {capture:'viewport'})
 	
   })
 })
