@@ -7,7 +7,7 @@ describe('Login Successful', function() {
 	})
 	
 	//Visit page
-	cy.visit('http://172.16.69.108:4200/login')
+	cy.visit(Cypress.env('api_server'))
 	
 	//Fill fields
 	cy.get('input[name="username"]').type('dummy')
