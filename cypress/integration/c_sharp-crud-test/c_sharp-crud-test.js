@@ -4,9 +4,9 @@ describe('Prueba de Aplicación', function() {
 	//**************************************************************
 	//************************** 1. Login **************************
 	//**************************************************************
-	cy.visit(Cypress.env('c_sharp_server'))
-	cy.get('input#Auth_Email').type(Cypress.env('admin_user'))
-	cy.get('input#Auth_Password').type(Cypress.env('admin_psw'))
+	cy.visit(Cypress.env('api_server'))
+	cy.get('input#Auth_Email').type(Cypress.env('user'))
+	cy.get('input#Auth_Password').type(Cypress.env('password'))
 	cy.screenshot('paso_1_1')
 	cy.get('input[type="submit"]').contains('Log In').click()
 	cy.url().should('contain', Cypress.env('c_sharp_server'))
