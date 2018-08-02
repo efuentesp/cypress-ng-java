@@ -9,6 +9,6 @@
   "author": "Raul Moctezuma",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^3.0.2"
+    "cypress": "^3.0.3"
   }
 }
