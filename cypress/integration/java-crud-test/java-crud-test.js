@@ -326,30 +326,20 @@ describe('Prueba de Seguridad', function() {
 		cy.get('input#description').type('Application Test')
 		cy.get('input#size').clear().type('1')
 		cy.get('div').contains('label', 'Complejidad').parent().within(() => {
-			cy.get('div').contains('Muy Simple').within(() => {
-				cy.get('input[type="radio"]').check()
-			})
+			cy.get('input[type="radio"]').eq(0).check()
 		})
 		cy.get('input#repetitions').clear().type('1')
 		cy.get('div').contains('label', 'Entidades').parent().within(() => {
-			cy.get('div').contains('De 2 a 4').within(() => {
-				cy.get('input[type="radio"]').check()
-			})
+			cy.get('input[type="radio"]').eq(0).check()
 		})
 		cy.get('div').contains('label', 'Datos').parent().within(() => {
-			cy.get('div').contains('De 0 a 10').within(() => {
-				cy.get('input[type="radio"]').check()
-			})
+			cy.get('input[type="radio"]').eq(0).check()
 		})
 		cy.get('div').contains('label', 'Tipo de Algoritmo').parent().within(() => {
-			cy.get('div').contains('Mover información').within(() => {
-				cy.get('input[type="radio"]').check()
-			})
+			cy.get('input[type="radio"]').eq(0).check()
 		})
 		cy.get('div').contains('label', 'Reusabilidad').parent().within(() => {
-			cy.get('div').contains('Lógica única').within(() => {
-				cy.get('input[type="radio"]').check()
-			})
+			cy.get('input[type="radio"]').eq(0).check()
 		})
 		cy.get('textarea#comments').type('This is only a test')
 		cy.screenshot('paso_14_2')
@@ -404,6 +394,27 @@ describe('Prueba de Seguridad', function() {
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
 	})
 	
+	it('17. Eliminar el Menu creado anteriormente, validar que no se pueda.', function() {
+		cy.get('div#sidebar-menu').within(() => {
+			cy.get('div.menu_section').contains('General').as('menu')
+			cy.get('@menu').parent().within(() => {
+				cy.get('li').contains('a', 'Administrar Menu').click()
+			})
+		})
+		cy.url().should('contain', '/managemenu')
+		cy.get('table>tbody>').contains('tr', 'Test Menu Edited').within(() => {
+			cy.get('button>span.fa.fa-trash').click()
+		})
+		cy.url().should('contain', '/editmenu')
+		cy.screenshot('paso_17_1')
+		cy.get('button').contains('Eliminar').should('be.enabled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-content').should('contain', 'Menu no se puede eliminar debido a que esta asociado con otra entidad.')
+		cy.wait(1000)
+		cy.screenshot('paso_17_2', {capture:'viewport'})
+		cy.get('div[class="swal2-popup swal2-modal swal2-show"]>div[class="swal2-actions"]>button[class="swal2-confirm swal2-styled"]').click()
+	})
+	
 	it('18. Eliminar el Serivicio Funcional creado anteriormente, validar que se eliminó.', function() {
 		cy.get('div#sidebar-menu').within(() => {
 			cy.get('div.menu_section').contains('General').as('menu')
@@ -425,6 +436,27 @@ describe('Prueba de Seguridad', function() {
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
 	})
 	
+	it('19. Eliminar el Modulo creado anteriormente, validar que no se pueda.', function() {
+		cy.get('div#sidebar-menu').within(() => {
+			cy.get('div.menu_section').contains('General').as('menu')
+			cy.get('@menu').parent().within(() => {
+				cy.get('li').contains('a', 'Administrar Module').click()
+			})
+		})
+		cy.url().should('contain', '/managemodule')
+		cy.get('table>tbody>').contains('tr', 'Test Module Edited').within(() => {
+			cy.get('button>span.fa.fa-trash').click()
+		})
+		cy.url().should('contain', '/editmodule')
+		cy.screenshot('paso_19_1')
+		cy.get('button').contains('Eliminar').should('be.enabled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-content').should('contain', 'Module no se puede eliminar debido a que esta asociado con otra entidad.')
+		cy.wait(1000)
+		cy.screenshot('paso_19_2', {capture:'viewport'})
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
+	})
+	
 	it('20. Eliminar el Menu creado anteriormente, validar que se eliminó.', function() {
 		cy.get('div#sidebar-menu').within(() => {
 			cy.get('div.menu_section').contains('General').as('menu')
@@ -443,7 +475,28 @@ describe('Prueba de Seguridad', function() {
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-content').should('contain', 'Menu item has been deleted successfully.')
 		cy.wait(1000)
 		cy.screenshot('paso_20_2', {capture:'viewport'})
-		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()	
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
+	})
+	
+	it('21. Eliminar la Aplicación creada anteriormente, validar que no se pueda.', function() {
+		cy.get('div#sidebar-menu').within(() => {
+			cy.get('div.menu_section').contains('General').as('menu')
+			cy.get('@menu').parent().within(() => {
+				cy.get('li').contains('a', 'Administrar Application').click()
+			})
+		})
+		cy.url().should('contain', '/manageapplication')
+		cy.get('table>tbody>').contains('tr', 'Test Application Edited').within(() => {
+			cy.get('button>span.fa.fa-trash').click()
+		})
+		cy.url().should('contain', '/editapplication')
+		cy.screenshot('paso_21_1')
+		cy.get('button').contains('Eliminar').should('be.enabled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-content').should('contain', 'Application no se puede eliminar debido a que esta asociado con otra entidad.')
+		cy.wait(1000)
+		cy.screenshot('paso_21_2', {capture:'viewport'})
+		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
 	})
 	
 	it('22. Eliminar el Modulo creado anteriormente, validar que se eliminó.', function() {
@@ -479,12 +532,12 @@ describe('Prueba de Seguridad', function() {
 			cy.get('button>span.fa.fa-trash').click()
 		})
 		cy.url().should('contain', '/editapplication')
-		cy.screenshot('paso_24_1')
+		cy.screenshot('paso_23_1')
 		cy.get('button').contains('Eliminar').should('be.enabled').click()
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-content').should('contain', 'Application item has been deleted successfully.')
 		cy.wait(1000)
-		cy.screenshot('paso_22_2', {capture:'viewport'})
+		cy.screenshot('paso_23_2', {capture:'viewport'})
 		cy.get('div.swal2-popup.swal2-modal.swal2-show>div.swal2-actions>button.swal2-confirm.swal2-styled').click()
 	})
 	
